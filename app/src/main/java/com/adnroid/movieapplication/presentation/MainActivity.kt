@@ -1,4 +1,4 @@
-package com.adnroid.movieapplication.presentation.main
+package com.adnroid.movieapplication.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
