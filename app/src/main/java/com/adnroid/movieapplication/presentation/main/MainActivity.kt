@@ -1,11 +1,12 @@
-package com.adnroid.movieapplication.presentation
+package com.adnroid.movieapplication.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.adnroid.movieapplication.R
-import com.adnroid.movieapplication.domain.GetPopularUseCase
+import com.adnroid.movieapplication.presentation.App
+import com.adnroid.movieapplication.presentation.view_model_factory.ViewModelFactory
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -33,7 +34,6 @@ class MainActivity : AppCompatActivity() {
                 Log.d("GetPopularMovie", it.toString())
             }
         }
-
 
     }
 }

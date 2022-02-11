@@ -2,7 +2,7 @@ package com.adnroid.movieapplication.di
 
 import android.app.Application
 import com.adnroid.movieapplication.presentation.App
-import com.adnroid.movieapplication.presentation.MainActivity
+import com.adnroid.movieapplication.presentation.main.MainActivity
 import dagger.BindsInstance
 import dagger.Component
 

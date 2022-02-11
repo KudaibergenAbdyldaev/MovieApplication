@@ -1,4 +1,4 @@
-package com.adnroid.movieapplication.presentation
+package com.adnroid.movieapplication.presentation.view_model_factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

@@ -1,4 +1,4 @@
-package com.adnroid.movieapplication.presentation
+package com.adnroid.movieapplication.presentation.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
