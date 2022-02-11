@@ -1,4 +1,6 @@
 package com.adnroid.movieapplication.presentation
 
-class MainViewModel {
+import androidx.lifecycle.ViewModel
+
+class MainViewModel: ViewModel()  {
 }
