@@ -14,22 +14,22 @@ class MovieRepositoryImpl @Inject constructor(
     private val apiInterface: ApiInterface
 ) : MovieRepository {
 
-    override suspend fun getPopularMovieList(viewModelScope: CoroutineScope): LiveData<PagingData<Results>> {
+    override suspend fun getPopularMovieList(): LiveData<PagingData<Results>> {
 
-        Log.d("MovieRepositoryImpl", apiInterface.getPopularMovie(apiKey = "bd8c2d1b4af41b4060929a043be50eb6",
-            language = "ru-RU",1).toString())
+//        Log.d("MovieRepositoryImpl", apiInterface.getPopularMovie(apiKey = "bd8c2d1b4af41b4060929a043be50eb6",
+//            language = "ru-RU",1).toString())
 
         return Pager(
             config = PagingConfig(
                 pageSize = 20,
                 prefetchDistance = 2,
                 maxSize = 100,
-                enablePlaceholders = true
+                enablePlaceholders = false
             ),
             pagingSourceFactory = {
                 MoviePagingSource(apiInterface)
             }
-        ).flow.cachedIn(viewModelScope).asLiveData()
+        ).liveData
     }
 
 }

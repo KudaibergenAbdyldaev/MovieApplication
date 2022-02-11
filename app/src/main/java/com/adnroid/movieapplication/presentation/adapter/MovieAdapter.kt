@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.adnroid.movieapplication.R
 import com.adnroid.movieapplication.databinding.PopularMovieItemBinding
 import com.adnroid.movieapplication.domain.Results
 import com.bumptech.glide.Glide
@@ -14,24 +15,25 @@ class MovieAdapter : PagingDataAdapter<Results, MovieAdapter.ViewHolder>(DiffUti
     inner class ViewHolder(private val binding: PopularMovieItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Results) {
-
+        fun bind(item: Results?) {
             Glide
                 .with(binding.root.context)
-                .load("https://image.tmdb.org/t/p/w500/${item.img}")
+                .load("https://image.tmdb.org/t/p/w500/${item?.img}")
                 .into(binding.image)
-
         }
     }
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        getItem(position)?.let { holder.bind(it) }
+        holder.bind(getItem(position))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
-            PopularMovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding: PopularMovieItemBinding = PopularMovieItemBinding.bind(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.popular_movie_item, parent, false
+            )
+        )
         return ViewHolder(binding)
     }
 
