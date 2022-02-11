@@ -1,6 +1,7 @@
 package com.adnroid.movieapplication.di
 
 import android.app.Application
+import com.adnroid.movieapplication.presentation.App
 import com.adnroid.movieapplication.presentation.MainActivity
 import dagger.BindsInstance
 import dagger.Component
@@ -14,6 +15,7 @@ import dagger.Component
 )
 interface ApplicationComponent {
 
+    fun inject(app: App)
     fun inject(activity: MainActivity)
 
     @Component.Factory
