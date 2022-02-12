@@ -31,6 +31,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -65,7 +69,7 @@ dependencies {
     implementation "com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3"
 
     // **Lifecycle**
-    def lifecycle_version = "2.4.0"
+    def lifecycle_version = "2.4.1"
     // | for ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     // | for LiveData
@@ -86,15 +90,15 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp-bom:4.9.0"
     implementation "com.squareup.okhttp3:okhttp"
     implementation "com.squareup.okhttp3:logging-interceptor"
-    implementation "com.squareup.okhttp3:okhttp:4.9.0"
+    implementation "com.squareup.okhttp3:okhttp:4.9.1"
 
     // **Jackson**
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:2.12.3"
     implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
 
     //dagger 2
-    implementation 'com.google.dagger:dagger:2.28.3'
-    kapt 'com.google.dagger:dagger-compiler:2.12'
+    implementation 'com.google.dagger:dagger:2.38.1'
+    kapt 'com.google.dagger:dagger-compiler:2.37'
 
     //paging 3
     implementation "androidx.paging:paging-runtime-ktx:3.1.0"
