@@ -1,10 +1,13 @@
 package com.adnroid.movieapplication.data.repository
 
 import androidx.paging.*
+import com.adnroid.movieapplication.data.mapper.MovieMapper
 import com.adnroid.movieapplication.data.network.ApiInterface
 import com.adnroid.movieapplication.domain.Results
 
-class MoviePagingSource(private val apiInterface: ApiInterface) :
+class MoviePagingSource(private val apiInterface: ApiInterface,
+                        private val mapper: MovieMapper
+) :
     PagingSource<Int, Results>() {
 
     override fun getRefreshKey(state: PagingState<Int, Results>): Int? {
@@ -23,7 +26,7 @@ class MoviePagingSource(private val apiInterface: ApiInterface) :
                 language = "ru-RU",
                 page = pageIndex
             )
-            val data = response.results
+            val data = response.results.map { mapper.mapResultsDtoToResults(it) }
 
             return LoadResult.Page(
                 data = data,

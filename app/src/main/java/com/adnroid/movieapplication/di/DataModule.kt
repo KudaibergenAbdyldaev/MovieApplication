@@ -1,5 +1,6 @@
 package com.adnroid.movieapplication.di
 
+import com.adnroid.movieapplication.data.mapper.MovieMapper
 import com.adnroid.movieapplication.data.network.ApiFactory
 import com.adnroid.movieapplication.data.network.ApiInterface
 import com.adnroid.movieapplication.data.repository.MovieRepositoryImpl
@@ -21,6 +22,12 @@ interface DataModule {
         @ApplicationScope
         fun provideApiService(): ApiInterface {
             return ApiFactory.apiService
+        }
+
+        @Provides
+        @ApplicationScope
+        fun provideMapper(): MovieMapper {
+            return MovieMapper()
         }
     }
 }
