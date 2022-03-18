@@ -8,8 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.GridLayoutManager
+import com.adnroid.movieapplication.databinding.ActivityMainBinding
 import com.adnroid.movieapplication.databinding.FragmentPopularBinding
 import com.adnroid.movieapplication.presentation.App
+import com.adnroid.movieapplication.presentation.adapter.LoaderStateAdapter
 import com.adnroid.movieapplication.presentation.adapter.MovieAdapter
 import com.adnroid.movieapplication.presentation.adapter.PopularViewModel
 import com.adnroid.movieapplication.presentation.view_model_factory.ViewModelFactory
@@ -27,7 +31,9 @@ class PopularFragment : Fragment() {
     private val binding: FragmentPopularBinding
         get() = _binding ?: throw RuntimeException("FragmentPopularBinding is null")
 
-    private var movieAdapter: MovieAdapter? = null
+    private val movieAdapter: MovieAdapter by lazy {
+        MovieAdapter()
+    }
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -52,14 +58,43 @@ class PopularFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this, viewModelFactory)[PopularViewModel::class.java]
 
-        movieAdapter = MovieAdapter()
-        binding.recyclerView.adapter = movieAdapter
+        setUpRecyclerView()
+        setRecyclerViewData()
+    }
 
+    private fun setRecyclerViewData() {
         lifecycleScope.launch {
             viewModel.getPopularMovie().observe(viewLifecycleOwner) {
-                movieAdapter?.submitData(lifecycle, pagingData = it)
+                movieAdapter.submitData(lifecycle, pagingData = it)
             }
         }
+    }
+
+    private fun setUpRecyclerView() {
+        val headerAdapter = LoaderStateAdapter()
+        val footerAdapter = LoaderStateAdapter()
+
+        val concatAdapter = movieAdapter.withLoadStateHeaderAndFooter(
+            header = headerAdapter,
+            footer = footerAdapter
+        )
+        binding.recyclerView.adapter = concatAdapter
+        val layoutManager = GridLayoutManager(requireContext(), 2)
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if (position == 0 && headerAdapter.itemCount > 0) {
+                    2
+                } else if (position == concatAdapter.itemCount - 1 && footerAdapter.itemCount > 0) {
+                    // if it is the last position and we have a footer
+                    2
+                } else {
+                    1
+                }
+            }
+        }
+        binding.recyclerView.layoutManager = layoutManager
+
+
     }
 
 }
