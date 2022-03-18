@@ -2,17 +2,10 @@ package com.adnroid.movieapplication.presentation.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.adnroid.movieapplication.R
 import com.adnroid.movieapplication.databinding.ActivityMainBinding
 import com.adnroid.movieapplication.presentation.App
-import com.adnroid.movieapplication.presentation.adapter.PopularViewModel
-import com.adnroid.movieapplication.presentation.adapter.MovieAdapter
 import com.adnroid.movieapplication.presentation.popular_fragment.PopularFragment
-import com.adnroid.movieapplication.presentation.view_model_factory.ViewModelFactory
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 

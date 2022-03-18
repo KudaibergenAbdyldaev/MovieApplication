@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.adnroid.movieapplication.domain.GetPopularUseCase
-import com.adnroid.movieapplication.domain.Results
+import com.pacckage.domain.GetPopularUseCase
+import com.pacckage.domain.Results
 import javax.inject.Inject
 
 class PopularViewModel @Inject constructor(

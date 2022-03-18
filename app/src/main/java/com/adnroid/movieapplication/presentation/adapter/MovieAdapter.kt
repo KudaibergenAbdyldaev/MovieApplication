@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.adnroid.movieapplication.R
 import com.adnroid.movieapplication.databinding.PopularMovieItemBinding
-import com.adnroid.movieapplication.domain.Results
 import com.bumptech.glide.Glide
+import com.pacckage.domain.Results
 
 class MovieAdapter : PagingDataAdapter<Results, MovieAdapter.ViewHolder>(DiffUtilCallBack) {
 
