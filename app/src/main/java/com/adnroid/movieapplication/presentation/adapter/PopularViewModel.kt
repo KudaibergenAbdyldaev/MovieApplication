@@ -1,4 +1,4 @@
-package com.adnroid.movieapplication.presentation.main
+package com.adnroid.movieapplication.presentation.adapter
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +10,7 @@ import com.adnroid.movieapplication.domain.GetPopularUseCase
 import com.adnroid.movieapplication.domain.Results
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class PopularViewModel @Inject constructor(
     private val getPopularUseCase: GetPopularUseCase
 ) : ViewModel() {
 
