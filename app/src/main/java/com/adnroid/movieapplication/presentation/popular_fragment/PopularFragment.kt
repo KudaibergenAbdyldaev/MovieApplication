@@ -8,14 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
-import com.adnroid.movieapplication.databinding.ActivityMainBinding
 import com.adnroid.movieapplication.databinding.FragmentPopularBinding
 import com.adnroid.movieapplication.presentation.App
 import com.adnroid.movieapplication.presentation.adapter.LoaderStateAdapter
 import com.adnroid.movieapplication.presentation.adapter.MovieAdapter
-import com.adnroid.movieapplication.presentation.adapter.PopularViewModel
 import com.adnroid.movieapplication.presentation.view_model_factory.ViewModelFactory
 import kotlinx.coroutines.launch
 import javax.inject.Inject

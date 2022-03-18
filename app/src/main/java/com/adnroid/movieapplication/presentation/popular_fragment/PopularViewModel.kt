@@ -1,4 +1,4 @@
-package com.adnroid.movieapplication.presentation.adapter
+package com.adnroid.movieapplication.presentation.popular_fragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

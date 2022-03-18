@@ -20,6 +20,8 @@ interface ApplicationComponent {
     fun inject(activity: MainActivity)
     fun inject(popularFragment: PopularFragment)
 
+    fun movieDetailComponent(): MovieDetailComponent.Factory
+
     @Component.Factory
     interface Factory {
 
