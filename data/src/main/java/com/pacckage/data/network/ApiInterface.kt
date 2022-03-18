@@ -15,7 +15,7 @@ interface ApiInterface {
         @Query("page") page: Int
     ): MovieDto
 
-    @GET("/movie/{movie_id}")
+    @GET("/3/movie/{movie_id}")
     suspend fun getDetailMovie(
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String,
