@@ -9,10 +9,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.adnroid.movieapplication.R
 import com.adnroid.movieapplication.databinding.FragmentPopularBinding
 import com.adnroid.movieapplication.presentation.App
 import com.adnroid.movieapplication.presentation.adapter.LoaderStateAdapter
 import com.adnroid.movieapplication.presentation.adapter.MovieAdapter
+import com.adnroid.movieapplication.presentation.deatil_fragment.DetailMovieFragment
 import com.adnroid.movieapplication.presentation.view_model_factory.ViewModelFactory
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -57,6 +59,7 @@ class PopularFragment : Fragment() {
 
         setUpRecyclerView()
         setRecyclerViewData()
+        openMovieDetail()
     }
 
     private fun setRecyclerViewData() {
@@ -90,8 +93,14 @@ class PopularFragment : Fragment() {
             }
         }
         binding.recyclerView.layoutManager = layoutManager
-
-
     }
 
+    private fun openMovieDetail(){
+        movieAdapter.onMovieItemClickListener = {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, DetailMovieFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+    }
 }
