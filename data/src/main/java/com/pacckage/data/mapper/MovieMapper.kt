@@ -8,7 +8,7 @@ import com.pacckage.domain.Results
 class MovieMapper {
 
     fun mapResultsDtoToResults(dto: ResultsDto): Results {
-        return Results("https://image.tmdb.org/t/p/w500/${dto.img}", dto.id, dto.title, dto.overview)
+        return Results("https://image.tmdb.org/t/p/w500/${dto.img}", dto.id)
     }
 
     fun mapMovieDtoToMovie(dto: MovieDto): Movie {
