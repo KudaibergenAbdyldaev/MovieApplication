@@ -1,6 +1,6 @@
 package com.pacckage.data.network
 
-import com.pacckage.data.network.model.DetailDto
+import com.pacckage.data.network.model.DetailMovieDto
 import com.pacckage.data.network.model.MovieDto
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -20,6 +20,6 @@ interface ApiInterface {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
-    ): DetailDto
+    ): DetailMovieDto
 
 }

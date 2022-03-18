@@ -1,18 +1,32 @@
 package com.pacckage.data.mapper
 
+import com.pacckage.data.network.model.DetailMovieDto
 import com.pacckage.data.network.model.MovieDto
 import com.pacckage.data.network.model.ResultsDto
+import com.pacckage.domain.DetailMovie
 import com.pacckage.domain.Movie
 import com.pacckage.domain.Results
 
 class MovieMapper {
 
+    companion object {
+        const val IMAGE_LINK = "https://image.tmdb.org/t/p/w500/"
+    }
+
     fun mapResultsDtoToResults(dto: ResultsDto): Results {
-        return Results("https://image.tmdb.org/t/p/w500/${dto.img}", dto.id)
+        return Results("$IMAGE_LINK${dto.img}", dto.id)
     }
 
     fun mapMovieDtoToMovie(dto: MovieDto): Movie {
         return Movie(dto.page, dto.results.map { mapResultsDtoToResults(it) })
+    }
+
+    fun mapDetailDtoToDetailMovie(dto: DetailMovieDto): DetailMovie {
+        val list = ArrayList<String>()
+        list.add("$IMAGE_LINK${dto.posterPath}")
+        list.add("$IMAGE_LINK${dto.backdropPath}")
+
+        return DetailMovie(dto.title, dto.overview, list)
     }
 
 }

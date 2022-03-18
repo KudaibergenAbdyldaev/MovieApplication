@@ -1,6 +1,6 @@
 package com.pacckage.domain
 
-data class Detail(
+data class DetailMovie(
     val title: String,
     val overview: String,
     val images: List<String>
