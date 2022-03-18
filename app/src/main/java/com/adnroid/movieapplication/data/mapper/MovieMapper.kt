@@ -8,7 +8,7 @@ import com.adnroid.movieapplication.domain.Results
 class MovieMapper {
 
     fun mapResultsDtoToResults(dto: ResultsDto): Results {
-        return Results(dto.img, dto.id, dto.title, dto.overview)
+        return Results("https://image.tmdb.org/t/p/w500/${dto.img}", dto.id, dto.title, dto.overview)
     }
 
     fun mapMovieDtoToMovie(dto: MovieDto): Movie {

@@ -18,7 +18,7 @@ class MovieAdapter : PagingDataAdapter<Results, MovieAdapter.ViewHolder>(DiffUti
         fun bind(item: Results?) {
             Glide
                 .with(binding.root.context)
-                .load("https://image.tmdb.org/t/p/w500/${item?.img}")
+                .load(item?.img?:"")
                 .into(binding.image)
         }
     }
