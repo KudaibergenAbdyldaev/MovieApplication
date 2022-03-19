@@ -100,7 +100,10 @@ class PopularFragment : Fragment() {
     private fun openMovieDetail() {
         movieAdapter.onMovieItemClickListener = {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, DetailMovieFragment())
+                .replace(
+                    R.id.fragment_container,
+                    DetailMovieFragment.newInstanceDetailMovieFragment(it)
+                )
                 .addToBackStack(null)
                 .commit()
         }
