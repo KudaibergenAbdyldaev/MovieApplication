@@ -22,11 +22,8 @@ class MovieMapper {
     }
 
     fun mapDetailDtoToDetailMovie(dto: DetailMovieDto): DetailMovie {
-        val list = ArrayList<String>()
-        list.add("$IMAGE_LINK${dto.posterPath}")
-        list.add("$IMAGE_LINK${dto.backdropPath}")
 
-        return DetailMovie(dto.title, dto.overview, list)
+        return DetailMovie(dto.title, dto.overview, IMAGE_LINK+dto.posterPath)
     }
 
 }

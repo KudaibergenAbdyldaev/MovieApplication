@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.adnroid.movieapplication.databinding.FragmentDetailMovieBinding
 import com.adnroid.movieapplication.di.MovieDetailComponent
 import com.adnroid.movieapplication.presentation.App
+import com.adnroid.movieapplication.presentation.extension.loadImageFromUrl
 import com.adnroid.movieapplication.presentation.view_model_factory.ViewModelFactory
 import javax.inject.Inject
 
@@ -33,7 +34,6 @@ class DetailMovieFragment : Fragment() {
         super.onCreate(savedInstanceState)
         parseParams()
 
-
         component = (requireActivity().application as App).component
             .movieDetailComponent()
             .create(movieId)
@@ -54,7 +54,10 @@ class DetailMovieFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)[MovieDetailViewModel::class.java]
         viewModel.getMovieDetail()
         viewModel.detailMovie.observe(viewLifecycleOwner) {
-            Log.e("getDetailMovie", it.toString())
+            binding.imageView.loadImageFromUrl(it.images)
+            binding.title.text = it.title
+            binding.desk.text = it.overview
+
         }
     }
 
