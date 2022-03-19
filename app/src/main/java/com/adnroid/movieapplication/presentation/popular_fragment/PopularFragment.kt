@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.adnroid.movieapplication.R
 import com.adnroid.movieapplication.databinding.FragmentPopularBinding
 import com.adnroid.movieapplication.presentation.App
@@ -63,11 +64,10 @@ class PopularFragment : Fragment() {
     }
 
     private fun setRecyclerViewData() {
-        lifecycleScope.launch {
-            viewModel.getPopularMovie().observe(viewLifecycleOwner) {
-                movieAdapter.submitData(lifecycle, pagingData = it)
-            }
+        viewModel.popularMovie.observe(viewLifecycleOwner) {
+            movieAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData = it)
         }
+
     }
 
     private fun setUpRecyclerView() {
@@ -78,14 +78,16 @@ class PopularFragment : Fragment() {
             header = headerAdapter,
             footer = footerAdapter
         )
+        binding.recyclerView.adapter?.stateRestorationPolicy =
+            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         binding.recyclerView.adapter = concatAdapter
+        binding.recyclerView.setHasFixedSize(true)
         val layoutManager = GridLayoutManager(requireContext(), 2)
         layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
                 return if (position == 0 && headerAdapter.itemCount > 0) {
                     2
                 } else if (position == concatAdapter.itemCount - 1 && footerAdapter.itemCount > 0) {
-                    // if it is the last position and we have a footer
                     2
                 } else {
                     1
@@ -95,7 +97,7 @@ class PopularFragment : Fragment() {
         binding.recyclerView.layoutManager = layoutManager
     }
 
-    private fun openMovieDetail(){
+    private fun openMovieDetail() {
         movieAdapter.onMovieItemClickListener = {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, DetailMovieFragment())

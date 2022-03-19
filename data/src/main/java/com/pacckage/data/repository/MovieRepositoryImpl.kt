@@ -13,7 +13,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val mapper: MovieMapper
 ) : MovieRepository {
 
-    override suspend fun getPopularMovieList(): LiveData<PagingData<Results>> {
+    override fun getPopularMovieList(): LiveData<PagingData<Results>> {
 
         return Pager(
             config = PagingConfig(

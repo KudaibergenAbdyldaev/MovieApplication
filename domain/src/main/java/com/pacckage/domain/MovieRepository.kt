@@ -5,6 +5,6 @@ import androidx.paging.PagingData
 
 interface MovieRepository {
 
-    suspend fun getPopularMovieList(): LiveData<PagingData<Results>>
+    fun getPopularMovieList(): LiveData<PagingData<Results>>
 
 }
