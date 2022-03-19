@@ -1,9 +1,6 @@
 package com.adnroid.movieapplication.presentation.popular_fragment
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.pacckage.domain.GetPopularUseCase
@@ -14,12 +11,15 @@ class PopularViewModel @Inject constructor(
     private val getPopularUseCase: GetPopularUseCase
 ) : ViewModel() {
 
-    private var _popularMovie = MutableLiveData<PagingData<Results>?>()
+    private val currentQuery = MutableLiveData(DEFAULT_QUERY)
 
-    suspend fun getPopularMovie(): LiveData<PagingData<Results>>{
-        val response = getPopularUseCase.getPopularMovie().cachedIn(viewModelScope)
-        _popularMovie.value = response.value
-        return response
+    val popularMovie = currentQuery.switchMap {
+        getPopularUseCase.getPopularMovie().cachedIn(viewModelScope)
+    }
+
+
+    companion object {
+        private const val DEFAULT_QUERY = "cats"
     }
 
 }
