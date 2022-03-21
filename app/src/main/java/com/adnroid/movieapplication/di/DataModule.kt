@@ -1,10 +1,15 @@
 package com.adnroid.movieapplication.di
 
-import com.adnroid.movieapplication.data.mapper.MovieMapper
-import com.adnroid.movieapplication.data.network.ApiFactory
-import com.adnroid.movieapplication.data.network.ApiInterface
-import com.adnroid.movieapplication.data.repository.MovieRepositoryImpl
-import com.adnroid.movieapplication.domain.MovieRepository
+
+import android.app.Application
+import com.pacckage.data.local_db.MovieDataBase
+import com.pacckage.data.mapper.MovieMapper
+import com.pacckage.data.network.ApiFactory
+import com.pacckage.data.network.ApiInterface
+import com.pacckage.data.repository.DetailRepositoryImpl
+import com.pacckage.data.repository.MovieRepositoryImpl
+import com.pacckage.domain.DetailRepository
+import com.pacckage.domain.MovieRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -15,6 +20,10 @@ interface DataModule {
     @Binds
     @ApplicationScope
     fun bindMovieRepository(impl: MovieRepositoryImpl): MovieRepository
+
+    @Binds
+    @ApplicationScope
+    fun bindDetailMovieRepository(impl: DetailRepositoryImpl): DetailRepository
 
     companion object {
 
@@ -28,6 +37,14 @@ interface DataModule {
         @ApplicationScope
         fun provideMapper(): MovieMapper {
             return MovieMapper()
+        }
+
+        @Provides
+        @ApplicationScope
+        fun provideMovieDataBase(
+            application: Application
+        ): MovieDataBase {
+            return MovieDataBase.getInstance(application)
         }
     }
 }
