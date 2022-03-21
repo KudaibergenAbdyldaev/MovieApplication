@@ -10,11 +10,11 @@ import com.pacckage.data.local_db.model.RemoteKeys
 interface RemoteKeysDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRemote(list: List<RemoteKeys>)
+    suspend fun insertRemote(list: List<RemoteKeys>)
 
     @Query("SELECT * FROM remoteKey WHERE repoId = :id")
-    fun getRemoteKeys(id:Int) : RemoteKeys
+    suspend fun getRemoteKeys(id: String) : RemoteKeys
 
     @Query("DELETE FROM remoteKey")
-    fun clearAll()
+    suspend fun clearAll()
 }

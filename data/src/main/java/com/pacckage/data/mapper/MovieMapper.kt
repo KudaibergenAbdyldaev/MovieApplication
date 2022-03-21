@@ -24,17 +24,16 @@ class MovieMapper {
 
     fun mapDetailDtoToDetailMovie(dto: DetailMovieDto): DetailMovie {
 
-        return DetailMovie(dto.title, dto.overview, IMAGE_LINK+dto.posterPath)
+        return DetailMovie(dto.title, dto.overview, IMAGE_LINK + dto.posterPath)
     }
 
-    fun mapResultsDtoToResultsEntity(dto: ResultsDto): ResultsEntity {
-        return ResultsEntity(img = "$IMAGE_LINK${dto.img}",id=0, movieId = dto.id)
+    fun mapResultsDtoToResultsEntity(dto: ResultsDto, id: String): ResultsEntity {
+        return ResultsEntity(img = "$IMAGE_LINK${dto.img}", id = id, movieId = dto.id)
     }
 
     fun mapResultsEntityToResults(dto: ResultsEntity): Results {
-        return Results("$IMAGE_LINK${dto.img}",dto.id)
+        return Results("$IMAGE_LINK${dto.img}", dto.movieId)
     }
-
 
 
 }

@@ -11,12 +11,12 @@ import com.pacckage.data.local_db.model.ResultsEntity
 interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPopularMovie(movie: List<ResultsEntity>)
+    suspend fun insertPopularMovie(movie: List<ResultsEntity>)
 
     @Query("SELECT * FROM popular_movie")
     fun getPopularMovie(): PagingSource<Int, ResultsEntity>
 
     @Query("DELETE FROM popular_movie")
-    fun clearAll()
+    suspend fun clearAll()
 
 }

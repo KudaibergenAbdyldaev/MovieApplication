@@ -16,16 +16,21 @@ class MovieRepositoryImpl @Inject constructor(
     private val db: MovieDataBase
 ) : MovieRepository {
 
+    companion object {
+        const val PAGE_SIZE = 20
+    }
+
     @OptIn(ExperimentalPagingApi::class)
     override fun getPopularMovieList(): LiveData<PagingData<Results>> {
-
+        val pagingSourceFactory = { db.movieDao().getPopularMovie() }
         return Pager(
             config = PagingConfig(
-                pageSize = 100,
+                pageSize = PAGE_SIZE,
+                maxSize = PAGE_SIZE + (PAGE_SIZE * 2),
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { db.movieDao().getPopularMovie() },
-            remoteMediator = MovieRemoteMediator(apiInterface, mapper, db,1)
+            pagingSourceFactory = pagingSourceFactory,
+            remoteMediator = MovieRemoteMediator(apiInterface, mapper, db)
         ).liveData
             .map { pagedData ->
                 pagedData.map { mapper.mapResultsEntityToResults(it) }
