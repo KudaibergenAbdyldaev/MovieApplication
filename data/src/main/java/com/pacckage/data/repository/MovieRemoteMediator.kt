@@ -16,10 +16,10 @@ import java.io.IOException
 class MovieRemoteMediator constructor(
     private val apiInterface: ApiInterface,
     private val mapper: MovieMapper,
-    private val db: MovieDataBase
+    private val db: MovieDataBase,
+    private val STARTING_PAGE_INDEX: Int
 ) : RemoteMediator<Int, ResultsEntity>() {
 
-    private var STARTING_PAGE_INDEX = 1
 
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH
@@ -45,7 +45,7 @@ class MovieRemoteMediator constructor(
                 page = STARTING_PAGE_INDEX
             )
             val response = data.results.map { mapper.mapResultsDtoToResultsEntity(it) }
-            val endOfList = response.isEmpty()
+            val endOfList = response.size < state.config.pageSize
             db.withTransaction {
                 if (loadType == LoadType.REFRESH) {
                     db.remoteKeyDao().clearAll()

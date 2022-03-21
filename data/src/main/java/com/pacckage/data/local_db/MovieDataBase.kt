@@ -10,7 +10,7 @@ import com.pacckage.data.local_db.dao.RemoteKeysDao
 import com.pacckage.data.local_db.model.RemoteKeys
 import com.pacckage.data.local_db.model.ResultsEntity
 
-@Database(entities = [ResultsEntity::class, RemoteKeys::class], version = 2, exportSchema = false)
+@Database(entities = [ResultsEntity::class, RemoteKeys::class], version = 1, exportSchema = false)
 abstract class MovieDataBase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao

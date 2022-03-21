@@ -6,9 +6,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "popular_movie")
 data class ResultsEntity(
-    @PrimaryKey
-    @ColumnInfo(name = "movieId")
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     val id: Int,
+    @ColumnInfo(name = "movieId")
+    val movieId: Int,
     @ColumnInfo(name = "img")
     val img: String? = null
 

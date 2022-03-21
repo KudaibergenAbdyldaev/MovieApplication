@@ -25,7 +25,7 @@ class MovieRepositoryImpl @Inject constructor(
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { db.movieDao().getPopularMovie() },
-            remoteMediator = MovieRemoteMediator(apiInterface, mapper, db)
+            remoteMediator = MovieRemoteMediator(apiInterface, mapper, db,1)
         ).liveData
             .map { pagedData ->
                 pagedData.map { mapper.mapResultsEntityToResults(it) }

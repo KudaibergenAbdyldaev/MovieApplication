@@ -28,7 +28,7 @@ class MovieMapper {
     }
 
     fun mapResultsDtoToResultsEntity(dto: ResultsDto): ResultsEntity {
-        return ResultsEntity(img = "$IMAGE_LINK${dto.img}",id= dto.id)
+        return ResultsEntity(img = "$IMAGE_LINK${dto.img}",id=0, movieId = dto.id)
     }
 
     fun mapResultsEntityToResults(dto: ResultsEntity): Results {
