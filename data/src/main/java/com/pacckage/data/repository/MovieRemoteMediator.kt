@@ -12,7 +12,6 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 
-
 @OptIn(ExperimentalPagingApi::class)
 class MovieRemoteMediator constructor(
     private val apiInterface: ApiInterface,
@@ -20,9 +19,7 @@ class MovieRemoteMediator constructor(
     private val db: MovieDataBase
 ) : RemoteMediator<Int, ResultsEntity>() {
 
-    companion object {
-        const val STARTING_PAGE_INDEX = 1
-    }
+    private var STARTING_PAGE_INDEX = 1
 
     override suspend fun initialize(): InitializeAction {
         return InitializeAction.LAUNCH_INITIAL_REFRESH
@@ -32,8 +29,7 @@ class MovieRemoteMediator constructor(
         loadType: LoadType,
         state: PagingState<Int, ResultsEntity>
     ): MediatorResult {
-        val pageKeyData = getKeyPageData(loadType, state)
-        val page = when (pageKeyData) {
+        val page = when (val pageKeyData = getKeyPageData(loadType, state)) {
             is MediatorResult.Success -> {
                 return pageKeyData
             }

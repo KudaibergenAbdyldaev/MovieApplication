@@ -28,11 +28,11 @@ class MovieMapper {
     }
 
     fun mapResultsDtoToResultsEntity(dto: ResultsDto): ResultsEntity {
-        return ResultsEntity("0","$IMAGE_LINK${dto.img}", dto.id)
+        return ResultsEntity(img = "$IMAGE_LINK${dto.img}",id= dto.id)
     }
 
     fun mapResultsEntityToResults(dto: ResultsEntity): Results {
-        return Results("$IMAGE_LINK${dto.img}",dto.movieId)
+        return Results("$IMAGE_LINK${dto.img}",dto.id)
     }
 
 

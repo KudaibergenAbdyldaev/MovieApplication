@@ -13,7 +13,7 @@ interface RemoteKeysDao {
     fun insertRemote(list: List<RemoteKeys>)
 
     @Query("SELECT * FROM remoteKey WHERE repoId = :id")
-    fun getRemoteKeys(id:String) : RemoteKeys
+    fun getRemoteKeys(id:Int) : RemoteKeys
 
     @Query("DELETE FROM remoteKey")
     fun clearAll()
