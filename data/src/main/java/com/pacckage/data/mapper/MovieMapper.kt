@@ -1,5 +1,7 @@
 package com.pacckage.data.mapper
 
+import com.pacckage.data.local_db.model.MovieEntity
+import com.pacckage.data.local_db.model.ResultsEntity
 import com.pacckage.data.network.model.DetailMovieDto
 import com.pacckage.data.network.model.MovieDto
 import com.pacckage.data.network.model.ResultsDto
@@ -24,6 +26,14 @@ class MovieMapper {
     fun mapDetailDtoToDetailMovie(dto: DetailMovieDto): DetailMovie {
 
         return DetailMovie(dto.title, dto.overview, IMAGE_LINK+dto.posterPath)
+    }
+
+    fun mapResultsEntityToResults(dto: ResultsEntity): Results {
+        return Results("$IMAGE_LINK${dto.img}", dto.id)
+    }
+
+    fun mapMovieEntityToMovie(dto: MovieEntity): Movie {
+        return Movie(dto.page, dto.results.map { mapResultsEntityToResults(it) })
     }
 
 }
