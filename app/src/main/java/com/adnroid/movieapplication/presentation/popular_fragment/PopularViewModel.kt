@@ -1,6 +1,7 @@
 package com.adnroid.movieapplication.presentation.popular_fragment
 
 import androidx.lifecycle.*
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.pacckage.domain.GetPopularUseCase

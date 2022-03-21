@@ -1,33 +1,43 @@
 package com.pacckage.data.local_db
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.pacckage.data.local_db.model.MovieEntity
+import com.pacckage.data.local_db.dao.MovieDao
+import com.pacckage.data.local_db.dao.RemoteKeysDao
+import com.pacckage.data.local_db.model.RemoteKeys
+import com.pacckage.data.local_db.model.ResultsEntity
 
-@Database(entities = [MovieEntity::class], version = 1, exportSchema = false)
+@Database(entities = [ResultsEntity::class, RemoteKeys::class], version = 2, exportSchema = false)
 abstract class MovieDataBase : RoomDatabase() {
 
-    lateinit var INSTANCE: MovieDataBase
-
-    abstract fun userDao(): MovieDao
+    abstract fun movieDao(): MovieDao
+    abstract fun remoteKeyDao(): RemoteKeysDao
 
     companion object {
-        @Volatile
-        private var instance: MovieDataBase? = null
+        private var INSTANCE: MovieDataBase? = null
         private val LOCK = Any()
+        private const val DB_NAME = "popular_movie.db"
 
-        operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
-            instance ?: buildDatabase(context).also { instance = it }
+        fun getInstance(application: Application): MovieDataBase {
+            INSTANCE?.let {
+                return it
+            }
+            synchronized(LOCK) {
+                INSTANCE?.let {
+                    return it
+                }
+                val db = Room.databaseBuilder(
+                    application,
+                    MovieDataBase::class.java,
+                    DB_NAME
+                ).build()
+                INSTANCE = db
+                return db
+            }
         }
-
-        private fun buildDatabase(context: Context) = Room.databaseBuilder(
-            context,
-            MovieDataBase::class.java, "popular_movie.db"
-        )
-            .allowMainThreadQueries()
-            .build()
 
     }
 

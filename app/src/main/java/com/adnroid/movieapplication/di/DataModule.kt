@@ -1,6 +1,8 @@
 package com.adnroid.movieapplication.di
 
 
+import android.app.Application
+import com.pacckage.data.local_db.MovieDataBase
 import com.pacckage.data.mapper.MovieMapper
 import com.pacckage.data.network.ApiFactory
 import com.pacckage.data.network.ApiInterface
@@ -35,6 +37,14 @@ interface DataModule {
         @ApplicationScope
         fun provideMapper(): MovieMapper {
             return MovieMapper()
+        }
+
+        @Provides
+        @ApplicationScope
+        fun provideMovieDataBase(
+            application: Application
+        ): MovieDataBase {
+            return MovieDataBase.getInstance(application)
         }
     }
 }

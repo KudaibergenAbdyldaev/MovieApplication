@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.adnroid.movieapplication.R
@@ -62,6 +63,7 @@ class PopularFragment : Fragment() {
         setRecyclerViewData()
         openMovieDetail()
     }
+
 
     private fun setRecyclerViewData() {
         viewModel.popularMovie.observe(viewLifecycleOwner) {

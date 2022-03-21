@@ -1,7 +1,11 @@
 package com.pacckage.data.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import androidx.paging.*
+import com.pacckage.data.local_db.MovieDataBase
+import com.pacckage.data.local_db.model.ResultsEntity
 import com.pacckage.data.mapper.MovieMapper
 import com.pacckage.data.network.ApiInterface
 import com.pacckage.domain.MovieRepository
@@ -10,22 +14,21 @@ import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val apiInterface: ApiInterface,
-    private val mapper: MovieMapper
+    private val mapper: MovieMapper,
+    private val db: MovieDataBase
 ) : MovieRepository {
 
+    @OptIn(ExperimentalPagingApi::class)
     override fun getPopularMovieList(): LiveData<PagingData<Results>> {
 
         return Pager(
-            config = PagingConfig(
-                pageSize = 20,
-                prefetchDistance = 2,
-                maxSize = 100,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = {
-                MoviePagingSource(apiInterface, mapper)
-            }
+            config = PagingConfig(pageSize = 100, enablePlaceholders = false),
+            pagingSourceFactory = { db.movieDao().getPopularMovie() },
+            remoteMediator = MovieRemoteMediator(apiInterface, mapper, db)
         ).liveData
+            .map { pagedData ->
+            pagedData.map { mapper.mapResultsEntityToResults(it) }
+        }
     }
 
 }
