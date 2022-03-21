@@ -33,7 +33,7 @@ abstract class MovieDataBase : RoomDatabase() {
                     application,
                     MovieDataBase::class.java,
                     DB_NAME
-                ).build()
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = db
                 return db
             }
