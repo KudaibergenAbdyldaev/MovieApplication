@@ -57,7 +57,6 @@ class DetailMovieFragment : Fragment() {
             binding.imageView.loadImageFromUrl(it.images)
             binding.title.text = it.title
             binding.desk.text = it.overview
-
         }
     }
 

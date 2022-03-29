@@ -2,10 +2,12 @@ package com.adnroid.movieapplication.presentation.popular_fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
@@ -36,6 +38,8 @@ class PopularFragment : Fragment() {
         MovieAdapter()
     }
 
+    private var connection = true
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -62,6 +66,14 @@ class PopularFragment : Fragment() {
         setUpRecyclerView()
         setRecyclerViewData()
         openMovieDetail()
+        checkNetworkConnection()
+    }
+
+    private fun checkNetworkConnection() {
+        viewModel.connectionLiveData.observe(viewLifecycleOwner) {
+            connection = it
+            showNoInternConnection()
+        }
     }
 
 
@@ -101,13 +113,26 @@ class PopularFragment : Fragment() {
 
     private fun openMovieDetail() {
         movieAdapter.onMovieItemClickListener = {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.fragment_container,
-                    DetailMovieFragment.newInstanceDetailMovieFragment(it)
-                )
-                .addToBackStack(null)
-                .commit()
+            if (connection) {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(
+                        R.id.fragment_container,
+                        DetailMovieFragment.newInstanceDetailMovieFragment(it)
+                    )
+                    .addToBackStack(null)
+                    .commit()
+            }else{
+                showNoInternConnection()
+            }
         }
     }
+
+    fun showNoInternConnection(){
+        Toast.makeText(
+            requireContext(),
+            getString(R.string.check_internet),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
 }

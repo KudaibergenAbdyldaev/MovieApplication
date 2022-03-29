@@ -1,14 +1,18 @@
 package com.pacckage.data.network
 
 import com.google.gson.GsonBuilder
+import com.pacckage.data.network.check_internet_connection.ConnectivityInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-object ApiFactory {
+class ApiFactory @Inject constructor(connectivityInterceptor: ConnectivityInterceptor) {
 
-    private const val BASE_URL = "https://api.themoviedb.org/3/"
+    companion object {
+        private const val BASE_URL = "https://api.themoviedb.org/3/"
+    }
 
     var gson = GsonBuilder()
         .setLenient()
@@ -16,6 +20,9 @@ object ApiFactory {
 
     private val okHttpClient: OkHttpClient = OkHttpClient.Builder()
         .addInterceptor(LoggingInterceptor().provideLoggingInterceptor())
+        .addInterceptor(
+            connectivityInterceptor
+        )
         .connectTimeout(90, TimeUnit.SECONDS)
         .readTimeout(90, TimeUnit.SECONDS)
         .writeTimeout(90, TimeUnit.SECONDS)
