@@ -72,7 +72,10 @@ class PopularFragment : Fragment() {
     private fun checkNetworkConnection() {
         viewModel.connectionLiveData.observe(viewLifecycleOwner) {
             connection = it
-            showNoInternConnection()
+            if (it)
+                movieAdapter.refresh()
+            else
+                showNoInternConnection()
         }
     }
 
@@ -121,13 +124,13 @@ class PopularFragment : Fragment() {
                     )
                     .addToBackStack(null)
                     .commit()
-            }else{
+            } else {
                 showNoInternConnection()
             }
         }
     }
 
-    fun showNoInternConnection(){
+    fun showNoInternConnection() {
         Toast.makeText(
             requireContext(),
             getString(R.string.check_internet),
