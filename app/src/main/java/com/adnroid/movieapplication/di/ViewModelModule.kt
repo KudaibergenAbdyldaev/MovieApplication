@@ -14,9 +14,4 @@ interface ViewModelModule {
     @IntoMap
     @ViewModelKey(PopularViewModel::class)
     fun bindPopularViewModel(viewModel: PopularViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(MovieDetailViewModel::class)
-    fun bindMovieDetailViewModel(viewModel: MovieDetailViewModel): ViewModel
 }
