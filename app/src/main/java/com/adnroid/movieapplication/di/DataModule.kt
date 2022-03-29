@@ -6,6 +6,8 @@ import com.pacckage.data.local_db.MovieDataBase
 import com.pacckage.data.mapper.MovieMapper
 import com.pacckage.data.network.ApiFactory
 import com.pacckage.data.network.ApiInterface
+import com.pacckage.data.network.check_internet_connection.ConnectivityInterceptor
+import com.pacckage.data.network.check_internet_connection.NetworkUtil
 import com.pacckage.data.repository.DetailRepositoryImpl
 import com.pacckage.data.repository.MovieRepositoryImpl
 import com.pacckage.domain.DetailRepository
@@ -29,8 +31,8 @@ interface DataModule {
 
         @Provides
         @ApplicationScope
-        fun provideApiService(): ApiInterface {
-            return ApiFactory.apiService
+        fun provideApiService(connectivityInterceptor: ConnectivityInterceptor): ApiInterface {
+            return ApiFactory(connectivityInterceptor).apiService
         }
 
         @Provides
@@ -46,5 +48,22 @@ interface DataModule {
         ): MovieDataBase {
             return MovieDataBase.getInstance(application)
         }
+
+        @Provides
+        @ApplicationScope
+        fun provideNetworkUtil(
+            application: Application
+        ): NetworkUtil {
+            return NetworkUtil(application)
+        }
+
+        @Provides
+        @ApplicationScope
+        fun provideConnectivityInterceptor(
+            networkUtil: NetworkUtil
+        ): ConnectivityInterceptor {
+            return ConnectivityInterceptor(networkUtil)
+        }
+
     }
 }
