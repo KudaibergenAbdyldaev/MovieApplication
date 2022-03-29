@@ -11,9 +11,9 @@ import com.pacckage.domain.Results
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
-    private val apiInterface: ApiInterface,
     private val mapper: MovieMapper,
-    private val db: MovieDataBase
+    private val db: MovieDataBase,
+    private val remoteMediator: MovieRemoteMediator
 ) : MovieRepository {
 
     companion object {
@@ -30,7 +30,7 @@ class MovieRepositoryImpl @Inject constructor(
                 enablePlaceholders = false
             ),
             pagingSourceFactory = pagingSourceFactory,
-            remoteMediator = MovieRemoteMediator(apiInterface, mapper, db)
+            remoteMediator = remoteMediator
         ).liveData
             .map { pagedData ->
                 pagedData.map { mapper.mapResultsEntityToResults(it) }

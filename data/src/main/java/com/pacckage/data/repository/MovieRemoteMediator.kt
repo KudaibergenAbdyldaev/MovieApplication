@@ -11,9 +11,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class MovieRemoteMediator constructor(
+class MovieRemoteMediator @Inject constructor(
     private val apiInterface: ApiInterface,
     private val mapper: MovieMapper,
     private val db: MovieDataBase,
@@ -29,8 +30,7 @@ class MovieRemoteMediator constructor(
     override suspend fun load(
         loadType: LoadType, state: PagingState<Int, ResultsEntity>
     ): MediatorResult {
-        val pageKeyData = getKeyPageData(loadType, state)
-        val page = when (pageKeyData) {
+        val page = when (val pageKeyData = getKeyPageData(loadType, state)) {
             is MediatorResult.Success -> {
                 return pageKeyData
             }
